@@ -6,6 +6,12 @@ import PersonalInfoForm from '../components/PersonalInfoForm';
 import ResumePreview from '../components/ResumePreview';
 import TemplateSelector from '../components/TemplateSelector';
 import ColorPicker from '../components/ColorPicker';
+import ProfessionalSummaryForm from '../components/ProfessionalSummaryForm';
+import ExperienceForm from '../components/ExperienceForm';
+import EducationForm from '../components/EducationForm';
+import ProjectForm from '../components/ProjectForm';
+import SkillsForm from '../components/SkillsForm';
+
 
 
 const ResumeBuilder = () => {
@@ -17,8 +23,8 @@ const ResumeBuilder = () => {
     professional_summary: '',
     experience: [],
     education: [],
+    project: [],
     skills: [],
-    projects: [],
     template:"classic",
     accent_color:"#3B82F6",
     public:false,
@@ -38,10 +44,12 @@ const ResumeBuilder = () => {
      {id:"summary", name:"Summary", icon:FileText },
     {id:"experience", name:"Experience", icon:Briefcase},
     {id:"education", name:"Education", icon: GraduationCap},
-    {id:"skills", name:"Skills", icon:Sparkles },
+
     {id:"projects", name:"Projects", icon:FolderIcon},
-     
+     {id:"skills", name:"Skills", icon:Sparkles },
   ]
+  
+
 
   const activeSection=sections[activeSectionIndex]
   
@@ -117,6 +125,7 @@ disabled={activeSectionIndex === sections.length - 1}
 </div>
 {/* Form Content */}
 <div className='space-y-6'>
+   {console.log("Active Section:", activeSection.id)}
     {activeSection.id === 'personal' && (
        
     <PersonalInfoForm data={resumeData.personal_info} onChange={
@@ -124,8 +133,74 @@ disabled={activeSectionIndex === sections.length - 1}
         data }))} removeBackground={removeBackground}
         setRemoveBackground={setRemoveBackground} />
 )}
+{activeSection.id === 'summary' && (
+  <ProfessionalSummaryForm
+    data={resumeData.professional_summary}
+    onChange={(data) => 
+      setResumeData(prev => ({ 
+        ...prev, 
+        professional_summary: data 
+      }))
+    }
+    setResumeData={setResumeData}
+  />
+)}
+{activeSection.id === 'experience' && (
+  <ExperienceForm
+    data={resumeData.experience} 
+    onChange={(data) => 
+      setResumeData(prev => ({ 
+        ...prev, 
+        experience: data 
+      }))
+    } 
+  />
+)}
+
+{activeSection.id === 'education' && (
+  <EducationForm
+    data={resumeData.education} 
+    onChange={(data) => 
+      setResumeData(prev => ({ 
+        ...prev, 
+        education: data 
+      }))
+    } 
+  />
+)}
+{activeSection.id === 'projects' && (
+  <ProjectForm
+    data={resumeData.project} 
+    onChange={(data) => 
+      setResumeData(prev => ({ 
+        ...prev, 
+        project: data 
+      }))
+    } 
+  />
+)}
+
+{activeSection.id === 'skills' && (
+  <SkillsForm
+    data={resumeData.skills} 
+    onChange={(data) => 
+      setResumeData(prev => ({ 
+        ...prev, 
+       skills: data 
+      }))
+    } 
+  />
+)}
+
+
    
 </div>
+<button className='bg-gradient-to-br from-green-100
+ to-green-200 ring-green-300 text-green-600 ring 
+ hover:ring-green-400 transition-all rounded-md px-6 py-2 mt-6 text-sm'>
+  Save Changes
+</button>
+
     </div>
 </div>
         
